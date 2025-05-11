@@ -8,5 +8,5 @@ topology:
     PC1:
       kind: linux
       image: docker.io/esanchezv/kaliipv6:latest
-links:
+  links:
     - endpoints: ["ros:ether2", "PC1:eth1"]        
