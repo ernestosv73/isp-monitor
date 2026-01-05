@@ -1,0 +1,26 @@
+username: admin
+password: NokiaSrl1!
+insecure: false
+skip-verify: true
+encoding: json_ietf
+timeout: 10s
+
+targets:
+  srlrouter:
+    address: srlrouter:57400
+    
+subscriptions:    
+  srl-if-stats:
+    mode: stream
+    stream-mode: sample
+    sample-interval: 5s
+    paths:
+      - /interface[name=ethernet-1/2]/statistics
+      - /interface[name=ethernet-1/2]/traffic-rate
+
+outputs:
+  file_output:
+    type: file
+    filename: /data/if-stats-nokia.json
+    format: json
+    split-events: true      
