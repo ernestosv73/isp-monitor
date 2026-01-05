@@ -1,0 +1,69 @@
+name: isp-monitor
+
+mgmt:
+  network: isp-comparativa
+  ipv4-subnet: 172.100.100.0/24  
+  
+topology:
+  nodes:
+    # Nokia SRL Linux Layer 2 Device
+    srlswitch:
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux:24.10.1
+      type: ixrd3
+      startup-config: configs/srlswitch.cfg
+
+    router-edge:
+      kind: arista_veos
+      mgmt-ipv4: 172.100.100.7
+      image: vrnetlab/arista_veos:4.35.1F
+      startup-config: configs/myconfig.txt    
+
+    isp1:
+      kind: linux
+      image: bprodoehl/wan-emulator:20230418
+      mgmt-ipv4: 172.100.100.11  
+
+    traffic-gen:
+      kind: linux
+      image: esanchezv/kali-iperf3:latest
+      exec:
+         - ip -6 addr add 2001:db8:10::100/64 dev eth1
+
+    colector:
+      kind: linux
+      image: esanchezv/alpine-python3:latest
+      binds:
+         - configs/snmp.sh:/root/snmp.sh
+         - configs/if-stats-netconf-v2.py:/root/if-stats-netconf-v2.py
+         - configs/if-stats-snmp-v3.py:/root/if-stats-snmp-v3.py
+         - configs/gnmic-config.yml:/root/gnmic-config.yml
+      exec:
+         - ip -6 addr add 2001:db8:10::200/64 dev eth1
+         - mkdir /data
+         - chmod +x /data
+         - python3 -m pip config set global.break-system-packages true
+         - chmod +x /root/snmp.sh
+         - sh /root/snmp.sh        
+
+    PC1:
+      kind: linux
+      image: docker.io/esanchezv/kaliipv6:latest     
+
+    PC2:
+      kind: linux
+      image: docker.io/esanchezv/kaliipv6:latest 
+ 
+  links:
+    - endpoints: ["isp1:eth1", "router-edge:eth1"]
+      mtu: 1500
+    - endpoints: ["router-edge:eth2", "srlswitch:e1-1"]
+      mtu: 1500
+    - endpoints: ["colector:eth1", "srlswitch:e1-2"]
+      mtu: 1500
+    - endpoints: ["traffic-gen:eth1", "srlswitch:e1-3"]
+      mtu: 1500
+    - endpoints: ["PC1:eth1", "srlswitch:e1-4"]
+      mtu: 1500    
+    - endpoints: ["PC2:eth1", "srlswitch:e1-5"]
+      mtu: 1500
