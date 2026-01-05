@@ -22,24 +22,29 @@ topology:
     isp1:
       kind: linux
       image: bprodoehl/wan-emulator:20230418
-      mgmt-ipv4: 172.100.100.11  
+      mgmt-ipv4: 172.100.100.11 
+      binds:
+        - configs/crea-bridge.sh:/root/crea-bridge.sh
+      exec:
+        - chmod +x /root/crea-bridge.sh
+        - bash /root/crea-bridge.sh    
 
     traffic-gen:
       kind: linux
       image: esanchezv/kali-iperf3:latest
-      exec:
-         - ip -6 addr add 2001:db8:10::100/64 dev eth1
+      #exec:
+         #- ip -6 addr add 2001:db8:10::100/64 dev eth1
 
     colector:
       kind: linux
       image: esanchezv/alpine-python3:latest
       binds:
          - configs/snmp.sh:/root/snmp.sh
-         - configs/if-stats-netconf-v2.py:/root/if-stats-netconf-v2.py
-         - configs/if-stats-snmp-v3.py:/root/if-stats-snmp-v3.py
+         #- configs/if-stats-netconf-v2.py:/root/if-stats-netconf-v2.py
+         #- configs/if-stats-snmp-v3.py:/root/if-stats-snmp-v3.py
          - configs/gnmic-config.yml:/root/gnmic-config.yml
       exec:
-         - ip -6 addr add 2001:db8:10::200/64 dev eth1
+         #- ip -6 addr add 2001:db8:10::200/64 dev eth1
          - mkdir /data
          - chmod +x /data
          - python3 -m pip config set global.break-system-packages true
