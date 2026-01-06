@@ -1,0 +1,5 @@
+configure
+interface 1/1/1-1/1/2
+no routing
+no shutdown
+exit
