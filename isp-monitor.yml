@@ -45,6 +45,8 @@ topology:
       kind: linux
       image: esanchezv/alpine-python3:latest
       binds:
+         - configs/capturas/snmp.txt:/root/snmp.txt
+         - configs/capturas/gnmi.txt:/root/gnmi.txt
          - configs/snmp.sh:/root/snmp.sh
          - configs/ifaces-stats-snmp-v2.py:/root/ifaces-stats-snmp-v2.py
          - configs/ifaces-stats-snmp.py:/root/ifaces-stats-snmp.py
