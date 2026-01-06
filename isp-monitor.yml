@@ -7,11 +7,15 @@ mgmt:
 topology:
   nodes:
     # Nokia SRL Linux Layer 2 Device
-    srlswitch:
-      kind: nokia_srlinux
-      image: ghcr.io/nokia/srlinux:24.10.1
-      type: ixrd3
-      startup-config: configs/srlswitch.cfg
+    #srlswitch:
+      #kind: nokia_srlinux
+      #image: ghcr.io/nokia/srlinux:24.10.1
+      #type: ixrd3
+      #startup-config: configs/srlswitch.cfg
+
+    aruba-switch:
+      kind: aruba_aoscx
+      image: vrnetlab/aruba_arubaos-cx:20240731173624
 
     router-edge:
       kind: arista_veos
@@ -63,13 +67,13 @@ topology:
   links:
     - endpoints: ["isp1:eth1", "router-edge:eth1"]
       mtu: 1500
-    - endpoints: ["router-edge:eth2", "srlswitch:e1-1"]
+    - endpoints: ["router-edge:eth2", "aruba-switch:eth1"]
       mtu: 1500
-    - endpoints: ["colector:eth1", "srlswitch:e1-2"]
+    - endpoints: ["colector:eth1", "aruba-switch:eth2"]
       mtu: 1500
-    - endpoints: ["traffic-gen:eth1", "srlswitch:e1-3"]
+    - endpoints: ["traffic-gen:eth1", "aruba-switch:eth3"]
       mtu: 1500
-    - endpoints: ["PC1:eth1", "srlswitch:e1-4"]
+    - endpoints: ["PC1:eth1", "aruba-switch:eth4"]
       mtu: 1500    
-    - endpoints: ["PC2:eth1", "srlswitch:e1-5"]
+    - endpoints: ["PC2:eth1", "aruba-switch:eth5"]
       mtu: 1500
