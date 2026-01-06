@@ -23,11 +23,11 @@ topology:
       kind: linux
       image: bprodoehl/wan-emulator:20230418
       mgmt-ipv4: 172.100.100.11 
-      binds:
-        - configs/crea-bridge.sh:/root/crea-bridge.sh
+      #binds:
+        #- configs/crea-bridge.sh:/root/crea-bridge.sh
       exec:
-        - chmod +x /root/crea-bridge.sh
-        - bash /root/crea-bridge.sh    
+        #- chmod +x /root/crea-bridge.sh
+        #- bash /root/crea-bridge.sh    
 
     traffic-gen:
       kind: linux
