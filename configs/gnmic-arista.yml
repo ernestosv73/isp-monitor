@@ -16,7 +16,7 @@ targets:
 subscriptions:    
   eos_interface_stats:
     paths:
-      - /interfaces/interface[name=ethernet2]/state/counters
+      - /interfaces/interface[name=Ethernet2]/state/counters
     mode: stream
     stream-mode: sample
     sample-interval: 5s
