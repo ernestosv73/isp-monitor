@@ -1,5 +1,7 @@
 apk update
 sleep 1
+apk add --no-cache tshark
+sleep 1
 apk add net-snmp-tools
 sleep 1
 apk add py3-lxml
