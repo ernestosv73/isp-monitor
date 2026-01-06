@@ -16,6 +16,7 @@ topology:
     aruba-switch:
       kind: aruba_aoscx
       image: vrnetlab/aruba_arubaos-cx:20240731173624
+      startup-config: configs/aruba/myconfig.txt
 
     router-edge:
       kind: arista_veos
