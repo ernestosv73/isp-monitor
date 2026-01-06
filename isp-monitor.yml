@@ -23,12 +23,13 @@ topology:
       kind: linux
       image: bprodoehl/wan-emulator:20230418
       mgmt-ipv4: 172.100.100.11 
-      #binds:
-        #- configs/crea-bridge.sh:/root/crea-bridge.sh
+      binds:
+         - configs/iperf3.sh:/root/iperf3.sh
       exec:
-        #- chmod +x /root/crea-bridge.sh
-        #- bash /root/crea-bridge.sh    
-
+         - chmod +x /root/iperf3.sh
+         - bash /root/iperf3.sh    
+         - ip -6 addr add 2001:db8:20::100/64 dev eth1       
+         - ip -6 route add 2001:db8:10::/64 via 2001:db8:20::1  
     traffic-gen:
       kind: linux
       image: esanchezv/kali-iperf3:latest
