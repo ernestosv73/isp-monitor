@@ -61,7 +61,7 @@ topology:
 
     PC1:
       kind: linux
-      image: docker.io/esanchezv/kaliipv6:latest     
+      image: esanchezv/kali-iperf3:latest    
 
     PC2:
       kind: linux
