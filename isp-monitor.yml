@@ -47,9 +47,9 @@ topology:
       binds:
          - configs/capturas/snmp.pcapng:/root/snmp.pcapng
          - configs/capturas/gnmi.pcapng:/root/gnmi.pcapng
+         - configs/capturas/analyze-pcap.py:/root/analyze-pcap.py
          - configs/snmp.sh:/root/snmp.sh
-         - configs/ifaces-stats-snmp-v2.py:/root/ifaces-stats-snmp-v2.py
-         - configs/ifaces-stats-snmp.py:/root/ifaces-stats-snmp.py
+         - configs/ifaces-stats-dual-snmp.py:/root/ifaces-stats-dual-snmp.py
          - configs/gnmic-arista.yml:/root/gnmic-arista.yml
       exec:
          #- ip -6 addr add 2001:db8:10::200/64 dev eth1
