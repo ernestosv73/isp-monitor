@@ -47,6 +47,8 @@ topology:
       binds:
          - configs/capturas/snmp.pcapng:/root/snmp.pcapng
          - configs/capturas/gnmi.pcapng:/root/gnmi.pcapng
+         - configs/capturas/snmp2.pcapng:/root/snmp2.pcapng
+         - configs/capturas/gnmi1.pcapng:/root/gnmi1.pcapng
          - configs/capturas/analyze-pcap.py:/root/analyze-pcap.py
          - configs/snmp.sh:/root/snmp.sh
          - configs/ifaces-stats-dual-snmp.py:/root/ifaces-stats-dual-snmp.py
