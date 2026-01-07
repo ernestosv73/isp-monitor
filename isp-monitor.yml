@@ -49,6 +49,8 @@ topology:
          - configs/capturas/gnmi.pcapng:/root/gnmi.pcapng
          - configs/capturas/snmp2.pcapng:/root/snmp2.pcapng
          - configs/capturas/gnmi1.pcapng:/root/gnmi1.pcapng
+         - configs/semantica/if-stats-snmp.json:/root/if-stats-snmp.json
+         - configs/semantica/ifaces-counters.json:/root/ifaces-counters.json
          - configs/capturas/analyze-pcap.py:/root/analyze-pcap.py
          - configs/snmp.sh:/root/snmp.sh
          - configs/ifaces-stats-dual-snmp.py:/root/ifaces-stats-dual-snmp.py
