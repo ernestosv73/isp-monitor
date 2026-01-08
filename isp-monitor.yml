@@ -54,6 +54,7 @@ topology:
          - configs/capturas/analyze-pcap.py:/root/analyze-pcap.py
          - configs/snmp.sh:/root/snmp.sh
          - configs/ifaces-stats-dual-snmp.py:/root/ifaces-stats-dual-snmp.py
+         - configs/ifaces-stats-snmp-ipv6.py:/root/ifaces-stats-snmp-ipv6.py
          - configs/gnmic-arista.yml:/root/gnmic-arista.yml
       exec:
          #- ip -6 addr add 2001:db8:10::200/64 dev eth1
