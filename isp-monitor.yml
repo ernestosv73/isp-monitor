@@ -51,7 +51,7 @@ topology:
          - configs/semantica/ifaces-counters.json:/root/ifaces-counters.json
          - configs/capturas/analyze-pcap.py:/root/analyze-pcap.py
          - configs/snmp.sh:/root/snmp.sh
-         - configs/if-stats-get-optimizado.py:/root/if-stats-get-optimizado.py
+         - configs/if-stats-snmp-get-optimizado.py:/root/if-stats-snmp-get-optimizado.py
          - configs/gnmic-arista.yml:/root/gnmic-arista.yml
       exec:
          #- ip -6 addr add 2001:db8:10::200/64 dev eth1
