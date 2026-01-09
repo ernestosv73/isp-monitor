@@ -13,10 +13,10 @@ topology:
       #type: ixrd3
       #startup-config: configs/srlswitch.cfg
 
-    aruba-switch:
-      kind: aruba_aoscx
-      image: vrnetlab/aruba_arubaos-cx:20240731173624
-      startup-config: configs/aruba/myconfig.txt
+    arista-switch:
+      kind: arista_ceos
+      image: ceos:4.34.3 
+      #startup-config: configs/aruba/myconfig.txt
 
     router-edge:
       kind: arista_veos
@@ -71,13 +71,13 @@ topology:
   links:
     - endpoints: ["isp1:eth1", "router-edge:eth1"]
       mtu: 1500
-    - endpoints: ["router-edge:eth2", "aruba-switch:eth1"]
+    - endpoints: ["router-edge:eth2", "arista-switch:eth1"]
       mtu: 1500
-    - endpoints: ["colector:eth1", "aruba-switch:eth2"]
+    - endpoints: ["colector:eth1", "arista-switch:eth2"]
       mtu: 1500
-    - endpoints: ["traffic-gen:eth1", "aruba-switch:eth3"]
+    - endpoints: ["traffic-gen:eth1", "arista-switch:eth3"]
       mtu: 1500
-    - endpoints: ["PC1:eth1", "aruba-switch:eth4"]
+    - endpoints: ["PC1:eth1", "arista-switch:eth4"]
       mtu: 1500    
-    - endpoints: ["PC2:eth1", "aruba-switch:eth5"]
+    - endpoints: ["PC2:eth1", "arista-switch:eth5"]
       mtu: 1500
