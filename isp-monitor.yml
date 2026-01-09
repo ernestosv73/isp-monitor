@@ -47,8 +47,7 @@ topology:
       binds:
          - configs/capturas/snmp.pcapng:/root/snmp.pcapng
          - configs/capturas/gnmi.pcapng:/root/gnmi.pcapng
-         - configs/semantica/if-stats-snmp.json:/root/if-stats-snmp.json
-         - configs/semantica/ifaces-counters.json:/root/ifaces-counters.json
+         - configs/mibs/ARISTA-IP-MIB.txt:/usr/share/snmp/mibs/ARISTA-IP-MIB.txt
          - configs/capturas/analyze-pcap.py:/root/analyze-pcap.py
          - configs/snmp.sh:/root/snmp.sh
          - configs/if-stats-snmp-get-optimizado.py:/root/if-stats-snmp-get-optimizado.py
