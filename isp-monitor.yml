@@ -51,7 +51,7 @@ topology:
          - configs/capturas/analyze-pcap.py:/root/analyze-pcap.py
          - configs/snmp.sh:/root/snmp.sh
          - configs/if-stats-snmp-get-optimizado.py:/root/if-stats-snmp-get-optimizado.py
-         - configs/gnmic-arista.yml:/root/gnmic-arista.yml
+         - configs/gnmic-devices.yml:/root/gnmic-devices.yml
       exec:
          #- ip -6 addr add 2001:db8:10::200/64 dev eth1
          - mkdir /data
