@@ -15,6 +15,7 @@ topology:
 
     arista-switch:
       kind: arista_ceos
+      mgmt-ipv4: 172.100.100.3
       image: ceos:4.34.3 
       #startup-config: configs/aruba/myconfig.txt
 
