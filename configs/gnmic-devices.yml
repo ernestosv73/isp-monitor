@@ -13,12 +13,16 @@ targets:
   router-edge:
     insecure: true
     subscriptions:    
-      - veos_interface_stats:   
+      - veos_interface_stats 
+    outputs: 
+      - file_output_router
   
-  switch-arista:
+  arista-switch:
     insecure: true
     subscriptions:    
-      - ceos_interface_stats:
+      - ceos_interface_stats
+    outputs: 
+      - file_output_switch
  
 subscriptions: 
 
@@ -45,11 +49,11 @@ outputs:
     filename: /data/ifaces-counters-router.json
     format: json
     split-events: true
-    targets: router-edge
+    
 
   file_output_switch:
     type: file
     filename: /data/ifaces-counters-switch.json
     format: json
     split-events: true
-    targets: switch-arista
+    
