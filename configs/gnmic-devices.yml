@@ -1,0 +1,55 @@
+# Copyright 2020 Nokia
+# Licensed under the BSD 3-Clause License.
+# SPDX-License-Identifier: BSD-3-Clause
+
+username: admin
+password: admin
+port: 6030
+timeout: 10s
+skip-verify: true
+encoding: json_ietf
+
+targets:
+  router-edge:
+    insecure: true
+    subscriptions:    
+      - veos_interface_stats:   
+  
+  switch-arista:
+    insecure: true
+    subscriptions:    
+      - ceos_interface_stats:
+ 
+subscriptions: 
+
+  veos_interface_stats:
+    paths:
+      - /interfaces/interface[name=Ethernet1]/state/counters
+      - /interfaces/interface[name=Ethernet2]/state/counters
+    mode: stream
+    stream-mode: sample
+    sample-interval: 5s
+
+  ceos_interface_stats:
+    paths:
+      - /interfaces/interface[name=Ethernet3]/state/counters
+      - /interfaces/interface[name=Ethernet4]/state/counters
+      - /interfaces/interface[name=Ethernet5]/state/counters
+    mode: stream
+    stream-mode: sample
+    sample-interval: 5s
+
+outputs:
+  file_output_router:
+    type: file
+    filename: /data/ifaces-counters-router.json
+    format: json
+    split-events: true
+    targets: router-edge
+
+  file_output_switch:
+    type: file
+    filename: /data/ifaces-counters-switch.json
+    format: json
+    split-events: true
+    targets: switch-arista
