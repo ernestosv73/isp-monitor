@@ -9,7 +9,6 @@ import time
 import logging
 import os
 from datetime import datetime, timezone
-from typing import Dict, List, Any
 from easysnmp import Session
 
 # ============================================================
@@ -47,6 +46,9 @@ TARGETS = [
 # ============================================================
 
 OID_MAP = {
+    # <<< MOD: ifDescr para equivalencia semántica
+    'if-descr': '.1.3.6.1.2.1.2.2.1.2',
+
     # High Capacity Counters (64-bit)
     'in-octets': '.1.3.6.1.2.1.31.1.1.1.6',
     'out-octets': '.1.3.6.1.2.1.31.1.1.1.10',
@@ -78,8 +80,7 @@ CALCULATED_METRICS = {
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+    format='%(asctime)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
@@ -94,23 +95,19 @@ class EfficientSNMPCollector:
         self.community = community
         self.interfaces = interfaces
         self.output_file = output_file
-
         self.session = None
-        self.cycle_count = 0
         self.previous_values = {}
 
     def connect(self):
-        if not self.session:
-            self.session = Session(
-                hostname=self.target,
-                community=self.community,
-                version=2,
-                timeout=2,
-                retries=1,
-                use_numeric=True
-            )
-            logger.info(f"[{self.name}] Conectado a {self.target}")
-        return True
+        self.session = Session(
+            hostname=self.target,
+            community=self.community,
+            version=2,
+            timeout=2,
+            retries=1,
+            use_numeric=True
+        )
+        logger.info(f"[{self.name}] Conectado a {self.target}")
 
     def build_oid_list(self):
         return [
@@ -124,6 +121,7 @@ class EfficientSNMPCollector:
         results = self.session.get(oid_list)
 
         data = {ifn: {} for ifn in self.interfaces}
+
         for oid, res in zip(oid_list, results):
             if res.value == 'NOSUCHINSTANCE':
                 continue
@@ -138,10 +136,13 @@ class EfficientSNMPCollector:
             if not metric:
                 continue
 
-            try:
-                data[if_name][metric] = int(res.value)
-            except ValueError:
-                data[if_name][metric] = 0
+            if metric == 'if-descr':
+                data[if_name]['ifDescr'] = res.value
+            else:
+                try:
+                    data[if_name][metric] = int(res.value)
+                except ValueError:
+                    data[if_name][metric] = 0
 
         for ifn in data:
             data[ifn]['in-pkts'] = sum(data[ifn].get(m, 0) for m in CALCULATED_METRICS['in-pkts'])
@@ -152,26 +153,28 @@ class EfficientSNMPCollector:
     def generate_gnmi(self, data):
         now = datetime.now(timezone.utc)
         ts = int(now.timestamp() * 1e9)
-        iso = f"{now.strftime('%Y-%m-%dT%H:%M:%S')}.{now.microsecond:06d}Z"
+        iso = now.isoformat()
+
         lines = []
 
         for ifn, metrics in data.items():
             updates = []
+
             for k, v in metrics.items():
                 key = f"{ifn}_{k}"
-                if self.previous_values.get(key) != v:
-                    updates.append({"Path": k, "values": {k: v}})
-                    self.previous_values[key] = v
 
-            if updates:
-                lines.append({
-                    "source": self.name,
-                    "subscription-name": "eos_interface_stats",
-                    "timestamp": ts,
-                    "time": iso,
-                    "prefix": f"interfaces/interface[name={ifn}]/state/counters",
-                    "updates": updates
-                })
+                # <<< MOD: siempre emitir snapshot por interfaz
+                updates.append({"Path": k, "values": {k: v}})
+                self.previous_values[key] = v
+
+            lines.append({
+                "source": self.name,
+                "subscription-name": "eos_interface_stats",
+                "timestamp": ts,
+                "time": iso,
+                "prefix": f"interfaces/interface[name={ifn}]/state/counters",
+                "updates": updates
+            })
 
         return lines
 
@@ -184,7 +187,6 @@ class EfficientSNMPCollector:
         data = self.collect()
         gnmi = self.generate_gnmi(data)
         self.save(gnmi)
-        self.cycle_count += 1
 
 # ============================================================
 # MAIN
