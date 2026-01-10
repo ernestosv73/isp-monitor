@@ -25,6 +25,6 @@ subscriptions:
 outputs:
   file_output:
     type: file
-    filename: /data/ifaces-counters.json
+    filename: /data/ifaces-counters-router.json
     format: json
     split-events: true
