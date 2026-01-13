@@ -1,0 +1,33 @@
+username: admin
+password: NokiaSrl1!
+insecure: false
+skip-verify: true
+timeout: 10s
+
+targets:
+  srlswitch:
+    address: srlswitch:57400
+
+subscriptions:
+  srl-system-performance:
+    mode: stream
+    stream-mode: sample
+    sample-interval: 5s
+    paths:
+      - /platform/control[slot=*]/cpu[index=all]/total
+        
+  srl-if-stats:
+    mode: stream
+    stream-mode: sample
+    sample-interval: 5s
+    paths:
+      - /interface[name=ethernet-1/*]/statistics
+      - /interface[name=ethernet-1/*]/traffic-rate
+  
+  
+outputs:
+  
+  prom-output:
+    type: prometheus
+    listen: :9273  
+    
