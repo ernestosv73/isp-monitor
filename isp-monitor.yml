@@ -67,7 +67,7 @@ topology:
       #exec:
          #- ip -6 addr add 2001:db8:10::100/64 dev eth1
 
-    colector:
+    gNMIc:
       kind: linux
       image: esanchezv/alpine-python3:latest
       binds:
@@ -100,7 +100,7 @@ topology:
       mtu: 1500
     - endpoints: ["router-edge:eth2", "arista-switch:eth1"]
       mtu: 1500
-    - endpoints: ["colector:eth1", "arista-switch:eth2"]
+    - endpoints: ["gNMIc:eth1", "arista-switch:eth2"]
       mtu: 1500
     - endpoints: ["traffic-gen:eth1", "arista-switch:eth3"]
       mtu: 1500
