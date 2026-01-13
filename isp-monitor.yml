@@ -78,7 +78,8 @@ topology:
          - configs/snmp.sh:/root/snmp.sh
          - configs/if-stats-snmp-multi.py:/root/if-stats-snmp-multi.py.py
          - configs/gnmic-devices.yml:/root/gnmic-devices.yml
-         - configs/gnmic/gnmic-cpu.yml:/root/gnmic-cpu.yml
+         - configs/gnmic/gnmic-cpu-router.yml:/root/gnmic-cpu-router.yml
+         - configs/gnmic/gnmic-cpu-switch.yml:/root/gnmic-cpu-switch.yml
       exec:
          #- ip -6 addr add 2001:db8:10::200/64 dev eth1
          - mkdir /data
