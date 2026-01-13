@@ -42,7 +42,7 @@ topology:
       kind: arista_ceos
       mgmt-ipv4: 172.100.100.3
       image: ceos:4.34.3 
-      #startup-config: configs/aruba/myconfig.txt
+      startup-config: configs/switch/myconfig.txt
 
     router-edge:
       kind: arista_veos
