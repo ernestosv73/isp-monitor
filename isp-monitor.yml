@@ -38,11 +38,19 @@ topology:
         GF_AUTH_ANONYMOUS: "true"
         GF_AUTH_OAUTH_AUTO_LOGIN: "true"
 
-    arista-switch:
-      kind: arista_ceos
-      mgmt-ipv4: 172.100.100.3
-      image: ceos:4.34.3 
+    #arista-switch:
+      #kind: arista_ceos
+      #mgmt-ipv4: 172.100.100.3
+      #image: ceos:4.34.3 
       #startup-config: configs/switch/myconfig.txt
+
+    # Nokia SRL Linux Layer 2 Device
+    srlswitch:
+      kind: nokia_srlinux
+      mgmt-ipv4: 172.100.100.3
+      image: ghcr.io/nokia/srlinux:24.10.1
+      type: ixrd3
+      startup-config: switch/srlswitch.cfg  
 
     router-edge:
       kind: arista_veos
@@ -99,13 +107,13 @@ topology:
   links:
     - endpoints: ["isp1:eth1", "router-edge:eth1"]
       mtu: 1500
-    - endpoints: ["router-edge:eth2", "arista-switch:eth1"]
+    - endpoints: ["router-edge:eth2", "srlswitch:e1-1"]
       mtu: 1500
-    - endpoints: ["gNMIc:eth1", "arista-switch:eth2"]
+    - endpoints: ["gNMIc:eth1", "srlswitch:e1-2"]
       mtu: 1500
-    - endpoints: ["traffic-gen:eth1", "arista-switch:eth3"]
+    - endpoints: ["traffic-gen:eth1", "srlswitch:e1-3"]
       mtu: 1500
-    - endpoints: ["PC1:eth1", "arista-switch:eth4"]
+    - endpoints: ["PC1:eth1", "srlswitch:e1-4"]
       mtu: 1500    
-    - endpoints: ["PC2:eth1", "arista-switch:eth5"]
+    - endpoints: ["PC2:eth1", "srlswitch:e1-5"]
       mtu: 1500
