@@ -88,6 +88,7 @@ topology:
          - configs/gnmic-devices.yml:/root/gnmic-devices.yml
          - configs/gnmic/gnmic-cpu-router.yml:/root/gnmic-cpu-router.yml
          - configs/gnmic/gnmic-cpu-switch.yml:/root/gnmic-cpu-switch.yml
+         - configs/gnmic/gnmic-nokia-if-stats.yml:/root/gnmic-nokia-if-stats.yml
       exec:
          #- ip -6 addr add 2001:db8:10::200/64 dev eth1
          - mkdir /data
