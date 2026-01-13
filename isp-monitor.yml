@@ -76,7 +76,7 @@ topology:
          - configs/mibs/ARISTA-IP-MIB.txt:/usr/share/snmp/mibs/ARISTA-IP-MIB.txt
          - configs/capturas/analyze-pcap.py:/root/analyze-pcap.py
          - configs/snmp.sh:/root/snmp.sh
-         - configs/if-stats-snmp-get-optimizado.py:/root/if-stats-snmp-get-optimizado.py
+         - configs/if-stats-snmp-multi.py:/root/if-stats-snmp-multi.py.py
          - configs/gnmic-devices.yml:/root/gnmic-devices.yml
          - configs/gnmic/gnmic-cpu.yml:/root/gnmic-cpu.yml
       exec:
