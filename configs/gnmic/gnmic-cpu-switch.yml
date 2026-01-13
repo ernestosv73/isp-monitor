@@ -1,0 +1,29 @@
+# Copyright 2020 Nokia
+# Licensed under the BSD 3-Clause License.
+# SPDX-License-Identifier: BSD-3-Clause
+
+username: admin
+password: admin
+port: 6030
+timeout: 10s
+skip-verify: true
+encoding: json_ietf
+
+targets:
+  arista-switch:
+    insecure: true
+    
+subscriptions:    
+  eos_system_cpu_stats:
+    paths:
+      - /system/cpus/cpu[index=0]/state/total
+      
+    mode: stream
+    stream-mode: sample
+    sample-interval: 5s
+
+outputs:
+  
+  prom-output:
+    type: prometheus
+    listen: :9273  
