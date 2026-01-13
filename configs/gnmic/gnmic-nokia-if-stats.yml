@@ -3,6 +3,7 @@ password: NokiaSrl1!
 insecure: false
 skip-verify: true
 timeout: 10s
+encoding: proto
 
 targets:
   srlswitch:
