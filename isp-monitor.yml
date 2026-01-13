@@ -6,12 +6,37 @@ mgmt:
   
 topology:
   nodes:
-    # Nokia SRL Linux Layer 2 Device
-    #srlswitch:
-      #kind: nokia_srlinux
-      #image: ghcr.io/nokia/srlinux:24.10.1
-      #type: ixrd3
-      #startup-config: configs/srlswitch.cfg
+    # TELEMETRIA STACK
+    prometheus:
+      kind: linux
+      mgmt-ipv4: 172.100.100.42
+      image: quay.io/prometheus/prometheus:v2.54.1
+      binds:
+        - configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      cmd: --config.file=/etc/prometheus/prometheus.yml
+      ports:
+        - 9090:9090
+
+    grafana:
+      kind: linux
+      mgmt-ipv4: 172.100.100.43
+      image: grafana/grafana:12.0.2
+      binds:
+        
+        - configs/grafana/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
+        - configs/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
+        - configs/grafana/dashboards:/var/lib/grafana/dashboards
+      ports:
+        - 3000:3000
+      env:
+        # GF_INSTALL_PLUGINS: "yesoreyeram-infinity-datasource"
+        # env vars to enable anonymous access
+        GF_ORG_ROLE: "Admin"
+        GF_ORG_NAME: "Main Org"
+        GF_AUTH_ANONYMOUS_ENABLED: "true"
+        GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+        GF_AUTH_ANONYMOUS: "true"
+        GF_AUTH_OAUTH_AUTO_LOGIN: "true"
 
     arista-switch:
       kind: arista_ceos
