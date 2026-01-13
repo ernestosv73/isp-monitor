@@ -1,0 +1,5 @@
+enable
+configure
+snmp-server community public ro
+exit
+write
