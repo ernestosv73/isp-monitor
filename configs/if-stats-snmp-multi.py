@@ -33,9 +33,9 @@ TARGETS = [
         "target": "172.100.100.3",
         "community": "public",
         "interfaces": {
-            "Ethernet3": 3,
-            "Ethernet4": 4,
-            "Ethernet5": 5
+            "ethernet-1/3": 81918,
+            "ethernet-1/4": 114686,
+            "ethernet-1/5": 147454
         },
         "output": "/data/if-stats-snmp-switch.json"
     }
@@ -169,7 +169,7 @@ class EfficientSNMPCollector:
 
             lines.append({
                 "source": self.name,
-                "subscription-name": "eos_interface_stats",
+                "subscription-name": "switch_interface_stats",
                 "timestamp": ts,
                 "time": iso,
                 "prefix": f"interfaces/interface[name={ifn}]/state/counters",
