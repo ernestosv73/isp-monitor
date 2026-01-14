@@ -84,7 +84,7 @@ topology:
          - configs/mibs/ARISTA-IP-MIB.txt:/usr/share/snmp/mibs/ARISTA-IP-MIB.txt
          - configs/capturas/analyze-pcap.py:/root/analyze-pcap.py
          - configs/snmp.sh:/root/snmp.sh
-         - configs/if-stats-snmp-multi.py:/root/if-stats-snmp-multi.py.py
+         - configs/if-stats-snmp-multi.py:/root/if-stats-snmp-multi.py
          - configs/gnmic-devices.yml:/root/gnmic-devices.yml
          - configs/gnmic/gnmic-cpu-router.yml:/root/gnmic-cpu-router.yml
          - configs/gnmic/gnmic-cpu-switch.yml:/root/gnmic-cpu-switch.yml
